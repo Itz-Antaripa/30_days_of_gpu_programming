@@ -1,5 +1,7 @@
 This is a very optimistic goal that I am setting for myself, currently, I don’t understand and know anything about CUDA, GPU programming, writing kernels and all. I want to learn. I don’t believe in the word getting “cracked”, but I definitely want to become better in certain skills which I feel will be important in the coming months or years. Let’s see how far I can go. I will document everything here in this repo.
 
+my learning path (created using chatgpt and deepseek): https://www.notion.so/antaripasaha/Learning-GPU-Programming-30-days-plan-1885314a563980be95a6e9fd43c4c217
+
 # 🚀 My 30-Day Journey into GPU Programming  
 
 This repository documents my **30-day deep dive into GPU programming**, covering **CUDA, Triton, and PyTorch** with a focus on **high-performance computing, deep learning optimizations, and large-scale training techniques**.  
