@@ -46,6 +46,8 @@ int main() {
 
 In the above program, each GPU thread runs this function in parallel, meaning multiple threads will print "Hello, World!" at the same time.
 
+---
+
 ## **3️⃣ CUDA Functions Explained**
 
 | **CUDA Function**               | **Purpose**                                                 |
@@ -62,6 +64,8 @@ In the above program, each GPU thread runs this function in parallel, meaning mu
 
 Formula of Global Thread ID: `idx = threadIdx.x + blockIdx.x * blockDim.x` -> This calculates the global thread ID for parallel execution.
 
+---
+
 ## **4️⃣ CUDA Hierarchy: Understanding GPU Threading**
 
 CUDA follows a hierarchical execution model that organizes threads into blocks and blocks into a grid and through this hierarchical structure it defines how threads are organized and executed. Here's an explanation:
@@ -72,6 +76,8 @@ GPU cores: GPUs have thousands of small processing cores that can execute comput
 Example: An NVIDIA GPU might have 80 SMs, each containing 128 cores.
 Total cores = 80 SMs × 128 cores/SM = 10240 cores
 Unlike a CPU (with a few powerful cores), a GPU has many lightweight cores, designed for massive parallelism.
+
+---
 
 ### 2. CUDA Execution Hierarchy: Hierarchical Thread Organization
 CUDA organizes threads into blocks and blocks into a grid. The execution model has three levels:
@@ -96,15 +102,22 @@ CUDA's thread-block-grid hierarchy maps onto the GPU's physical architecture to 
 - A grid is a collection of blocks.
 - Blocks in a grid execute independently and are distributed across multiple SMs.
 
+---
+
 ### 3. Thread Identification
 Each thread in the grid needs a unique ID to determine which portion of the data it should process. CUDA uses indices to achieve this:
 
 Within a Block
 `threadIdx.x`: The thread's unique index within a single block (range: 0 to blockDim.x - 1).
-Example: If a block has 128 threads, threadIdx.x will range from 0 to 127.
+
+Example: If a block has 128 threads, `threadIdx.x` will range from 0 to 127.
+
 Across Blocks
 `blockIdx.x`: The block's unique index within the grid (range: 0 to gridDim.x - 1).
+
 Example: If there are 10 blocks in the grid, blockIdx.x will range from 0 to 9.
+
+---
 
 ### 4. Example Calculation
 Let’s say:
@@ -129,6 +142,8 @@ For Thread 130, for example:
 `threadIdx.x` = 2 (it’s the 3rd thread within Block 1).
 Therefore, Global Thread ID, idx = 130.
 
+---
+
 ### 5. Threads and Cores: How They Map
 
 #### Step-by-Step:
@@ -152,14 +167,18 @@ If the GPU has **10240 cores**:
 - In one cycle, the GPU will execute **10240 threads in parallel**.
 - Remaining threads will wait in a queue (**warps**), and CUDA's scheduler will allocate them in subsequent cycles.
 
+---
 
-### 5. Advantages of This Hierarchy
+### 6. Advantages of This Hierarchy
+
 Parallelism: Each thread works independently on its own portion of the data.
 Scalability: By increasing grid and block dimensions, more threads can be used for larger data sets.
 Flexibility: We can control the number of blocks and threads to balance performance and resource usage.
 
+---
 
-### Importance of `cudaDeviceSynchronize()`
+
+### 📌 Importance of `cudaDeviceSynchronize()`
 `cudaDeviceSynchronize()` is a CUDA function that ensures the GPU has completed all its work (kernels and memory operations) before the CPU continues execution.
 By default, CUDA kernel launches and memory operations are asynchronous, meaning they return control to the CPU immediately without waiting for the GPU to finish. This is efficient but can lead to incorrect results if synchronization is not handled properly.
 When should you use it?
